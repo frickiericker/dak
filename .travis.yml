@@ -21,9 +21,10 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
+            - llvm-toolchain-trusty
           packages:
             - clang-3.8
+            - libc++1
       env:
         - M_CXX=clang++-3.8
         - M_CXXFLAGS="-stdlib=libc++"

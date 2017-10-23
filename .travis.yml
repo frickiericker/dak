@@ -13,7 +13,7 @@ matrix:
           packages:
             - g++-5
       env:
-         - MATRIX_EVAL="CXX=g++-5"
+        - CXX=g++-5
 
     # Ubuntu 16.04 LTS-compatible clang
     - os: linux
@@ -25,12 +25,12 @@ matrix:
           packages:
             - clang-3.8
       env:
-        - MATRIX_EVAL="CXX=clang++-3.8"
+        - CXX=clang++-3.8
+        - CXXFLAGS="-stdlib=libc++"
 
 script:
-  - eval "${MATRIX_EVAL}"
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_CXX_COMPILER="${CXX}"
+  - cmake .. -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
   - make -j ${JOBS}
   - tests/run_unittests

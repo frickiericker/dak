@@ -1,6 +1,15 @@
 DAK - Dimensional Analysis Kit for C++11
 ----------------------------------------
 
+![C++11][cxx-badge]
+![Boost License][license-badge]
+[![Build Status][travis-badge]][travis-url]
+
+[cxx-badge]: https://img.shields.io/badge/C%2B%2B-11-orange.svg
+[license-badge]: https://img.shields.io/badge/license-Boost-blue.svg
+[travis-badge]: https://travis-ci.org/frickiericker/dak.svg?branch=master
+[travis-url]: https://travis-ci.org/frickiericker/dak
+
 DAK is a single-file, header-only library for compile-time dimensional analysis of scalar and
 vector quantities.
 

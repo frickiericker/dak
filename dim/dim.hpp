@@ -1,7 +1,7 @@
 /*
- * Dimensional Analysis Kit
+ * dim - Header-only dimensional analysis library.
  *
- * Copyright snsnf 2017.
+ * Copyright snsinfu 2017, 2018.
  * Distributed under the Boost Software License, Version 1.0.
  *
  * Permission is hereby granted, free of charge, to any person or organization
@@ -27,12 +27,12 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef INCLUDED_DAK_HPP
-#define INCLUDED_DAK_HPP
+#ifndef INCLUDED_DIM_HPP
+#define INCLUDED_DIM_HPP
 
 #include <cmath>
 
-namespace dak
+namespace dim
 {
     //----------------------------------------------------------------
     // Traits
@@ -69,7 +69,7 @@ namespace dak
     // Scalar quantity with dimensional analysis
     //----------------------------------------------------------------
 
-    namespace detail // for dak::scalar
+    namespace detail // for dim::scalar
     {
         // This class mixes in (1) member variable value_ and (2) proper
         // constructors and convertion operator.
@@ -286,7 +286,7 @@ namespace dak
     // Vector quantity with dimensional analysis
     //----------------------------------------------------------------
 
-    namespace detail // for dak::vector
+    namespace detail // for dim::vector
     {
         // Dummy class for passing around type parameter packs. This is used to
         // pack generated parameter types of coords_mixin's constructors.
@@ -655,7 +655,7 @@ namespace dak
         using type = mechanical_dimension<L / N, M / N, T / N>;
     };
 
-    namespace dim
+    namespace mech
     {
         using number = mechanical_dimension<0, 0, 0>;
         using length = mechanical_dimension<1, 0, 0>;
@@ -666,7 +666,7 @@ namespace dak
         using momentum = product_dimension_t<speed, mass>;
         using force = product_dimension_t<acceleration, mass>;
         using energy = product_dimension_t<force, length>;
-    } // namespace dim
-} // namespace dak
+    } // namespace mech
+} // namespace dim
 
-#endif // INCLUDED_DAK_HPP
+#endif // INCLUDED_DIM_HPP

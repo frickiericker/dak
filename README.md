@@ -53,7 +53,7 @@ available:
 - `dim::mech::mass`
 - `dim::mech::time`
 - `dim::mech::speed`
-- `dim::mech::acceleration
+- `dim::mech::acceleration`
 - `dim::mech::momentum`
 - `dim::mech::force`
 - `dim::mech::energy`

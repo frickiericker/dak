@@ -86,7 +86,7 @@ available:
 
 Use `dim::mechanilcal_dimension` to define a tag with arbitrary dimension:
 
-```
+```c++
 using my_tag = dim::mechanical_dimension<L, M, T>; // Length, Mass, Time
 ```
 

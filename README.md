@@ -16,6 +16,7 @@ using reduced units; so, no specific units of measurement like CGS or SI are
 assumed, and no unit conversion is done.
 
 - [Installation](#installation)
+- [Example](#example)
 - [Usage](#usage)
 - [Testing](#testing)
 - [License](#license)
@@ -27,6 +28,31 @@ assumed, and no unit conversion is done.
 and you are done! Change file name and/or namespace identifier if necessary.
 
 [dim.hpp]: https://raw.githubusercontent.com/snsinfu/dim/master/dim/dim.hpp
+
+## Example
+
+```c++
+#include <dim.hpp>
+
+namespace units
+{
+    using mass         = dim::scalar<double, dim::mech::mass>;
+    using time         = dim::scalar<double, dim::mech::time>;
+    using velocity     = dim::vector<double, dim::mech::velocity, 3>;
+    using acceleration = dim::vector<double, dim::mech::acceleration, 3>;
+    using force        = dim::vector<double, dim::mech::force, 3>;
+}
+
+int main()
+{
+    units::mass mass{1.23};
+    units::force force{1.2, 3.4, 5.6};
+    units::acceleration accel = force / mass;
+
+    units::velocity velocity = accel // Compile error
+    units::velocity velocity = accel * units::time{1.0}; // OK!
+}
+```
 
 ## Usage
 
@@ -98,31 +124,6 @@ displacement r = p1 - p2;
 Note how different types are used to represent a position and a displacement.
 It may look pedantic, but it prevents subtle bugs in complex calculations such
 as molecular dynamics simulations.
-
-### Example
-
-```c++
-#include <dim.hpp>
-
-namespace units
-{
-    using mass         = dim::scalar<double, dim::mech::mass>;
-    using time         = dim::scalar<double, dim::mech::time>;
-    using velocity     = dim::vector<double, dim::mech::velocity, 3>;
-    using acceleration = dim::vector<double, dim::mech::acceleration, 3>;
-    using force        = dim::vector<double, dim::mech::force, 3>;
-}
-
-int main()
-{
-    units::mass mass{1.23};
-    units::force force{1.2, 3.4, 5.6};
-    units::acceleration accel = force / mass;
-
-    units::velocity velocity = accel // Compile error
-    units::velocity velocity = accel * units::time{1.0}; // OK!
-}
-```
 
 ## Testing
 

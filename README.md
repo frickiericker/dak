@@ -10,21 +10,107 @@ dim - Dimensional Analysis for C++
 [travis-badge]: https://travis-ci.org/snsinfu/dim.svg?branch=master
 [travis-url]: https://travis-ci.org/snsinfu/dim
 
-dim is a single-file, header-only library for compile-time dimensional analysis
-of scalar and vector quantities. It is targeted mainly for physics simulation
-using reduced units, so it assumes no specific units of measurement like CGS or
-SI.
+`dim` is a single-file, header-only library of static dimensional analysis of
+scalar and vector quantities. It is targeted mainly for physics simulation
+using reduced units; so, no specific units of measurement like CGS or SI are
+assumed, and no unit conversion is done.
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Testing](#testing)
+- [License](#license)
+- [Similar projects](#similar-projects)
+
+## Installation
+
+`dim` has no dependency. Just copy [dim.hpp][dim.hpp] to your include directory
+and you are done! Change file name and/or namespace identifier if necessary.
+
+[dim.hpp]: https://raw.githubusercontent.com/snsinfu/dim/master/dim/dim.hpp
+
+## Usage
+
+### Scalars
+
+Use `dim::scalar<T, D>` template to define scalar quantities:
+
+```c++
+using length = dim::scalar<double, dim::mech::length>;
+using time = dim::scalar<double, dim::mech::time>;
+using speed = dim::scalar<double, dim::mech::speed>;
+
+length r{1.0};
+time t{0.1};
+speed v = r / t;
+```
+
+The first parameter `T` is the underlying numeric type and the second parameter
+`D` is a tag type identifying physical dimension. These predefined tags are
+available:
+
+- `dim::mech::number`
+- `dim::mech::length`
+- `dim::mech::mass`
+- `dim::mech::time`
+- `dim::mech::speed`
+- `dim::mech::acceleration
+- `dim::mech::momentum`
+- `dim::mech::force`
+- `dim::mech::energy`
+
+Use `dim::mechanilcal_dimension` to define a tag with arbitrary dimension:
+
+```
+using my_tag = dim::mechanical_dimension<L, M, T>; // Length, Mass, Time
+```
+
+### Vectors
+
+Use `dim::vector<T, D, N>` template to define vector quantities:
+
+```c++
+using mass = dim::scalar<double, dim::mech::mass>;
+using force = dim::scalar<double, dim::mech::force, 3>;
+using acceleration = dim::scalar<double, dim::mech::acceleration, 3>;
+
+mass m{1.0};
+force f{1.0, 2.0, 3.0};
+acceleration a = f / m;
+```
+
+The first parameter `T` is the underlying numeric type, the second parameter
+`D` is a tag type identifying physical dimension, and the last parameter `N`
+is the spatial dimension.
+
+### Points
+
+`dim` also provides `dim::point<T, D, N>` for representing geometrical points:
+
+```c++
+using position = dim::point<double, dim::mech::legnth, 3>;
+using displacement = dim::vector<double, dim::mech::length, 3>;
+
+position p1{1.0, 2.0, 3.0};
+position p2{4.0, 5.0, 6.0};
+displacement r = p1 - p2;
+```
+
+Note how different types are used to represent a position and a displacement.
+It may look pedantic, but it prevents subtle bugs in complex calculations such
+as molecular dynamics simulations.
+
+### Example
 
 ```c++
 #include <dim.hpp>
 
 namespace units
 {
-    using mass = dim::scalar<double, dim::mech::mass>;
-    using time = dim::scalar<double, dim::mech::time>;
-    using velocity = dim::vector<double, dim::mech::velocity, 3>;
+    using mass         = dim::scalar<double, dim::mech::mass>;
+    using time         = dim::scalar<double, dim::mech::time>;
+    using velocity     = dim::vector<double, dim::mech::velocity, 3>;
     using acceleration = dim::vector<double, dim::mech::acceleration, 3>;
-    using force = dim::vector<double, dim::mech::force, 3>;
+    using force        = dim::vector<double, dim::mech::force, 3>;
 }
 
 int main()
@@ -33,79 +119,30 @@ int main()
     units::force force{1.2, 3.4, 5.6};
     units::acceleration accel = force / mass;
 
-    units::velocity velocity = accel * 10.0; // Compile error
-    units::velocity velocity = accel * units::time{10.0}; // OK!
+    units::velocity velocity = accel // Compile error
+    units::velocity velocity = accel * units::time{1.0}; // OK!
 }
 ```
-
-- [Installation](#installation)
-- [Basic usage](#basic-usage)
-- [Testing](#testing)
-- [License](#license)
-- [Similar projects](#similar-projects)
-
-## Installation
-
-dim has no dependency. Just put [dim.hpp][dim.hpp] in your include directory.
-Change file name and/or namespace identifier if necessary.
-
-[dim.hpp]: https://raw.githubusercontent.com/snsinfu/dim/master/dim/dim.hpp
-
-## Basic usage
-
-dim provides three class templates for dimension-aware quantities:
-
-- `dim::scalar<T, D>` for scalar quantities
-- `dim::vector<T, D, N>` for N-dimensional vector quantities
-- `dim::point<T, D, N>` for N-dimensional points
-
-`T` is the underlying numeric type. It is typically `float` or `double` but can
-be any number-like type. `D` is a tag type identifying dimension. Here you may
-use reference dimension types:
-
-```c++
-using length = dim::scalar<double, dim::mechanical_dimension<1, 0, 0>>;
-using velocity = dim::vector<double, dim::mechanical_dimension<1, 0, -1>, 3>;
-```
-
-`dim::mechanical_dimension<L, M, T>` is a dimension tag type for quantities
-with length dimension `L`, mass dimension `M` and time dimension `T`. Common
-dimensions are aliased in `dim::mech`
-namespace for convenience:
-
-- `dim::mech::number` (L M, T) = (0, 0, 0)
-- `dim::mech::length` (1, 0, 0)
-- `dim::mech::mass` (0, 1, 0)
-- `dim::mech::time` (0, 0, 1)
-- `dim::mech::speed` (1, 0, -1)
-- `dim::mech::acceleration` (1, 0, -2)
-- `dim::mech::momentum` (1, 1, -1)
-- `dim::mech::force` (1, 1, -2)
-- `dim::mech::energy` (2, 1, -2)
-
-You can also define your own dimension system. (TODO: documentation)
 
 ## Testing
 
 Move to the repository root and type following commands to run tests:
 
-    git submodule update --init
-    mkdir build
-    cd build
-    cmake ..
-    cmake --build .
-    ctest
-
-The last command can alternatively be `tests/run_unittests`.
+```console
+git submodule update --init
+mkdir build
+cd build
+cmake ..
+cmake --build .
+tests/run_unittests
+```
 
 ## License
 
 Boost Software License, Version 1.0.
 
 License text is included in the header file. So, you don't need to copy the
-license file (LICENSE.txt) into your project if you just use the header file.
-
----
+license file (LICENSE.txt) into your project.
 
 ## Similar projects
 
@@ -114,5 +151,4 @@ These are also header-only dimensional analysis libraries:
 - [units](https://github.com/nholthaus/units)
 - [PhysUnits](https://github.com/martinmoene/PhysUnits-CT-Cpp11)
 
-Unlike dim, they assume specific units of measurement and support no vector
-quantities.
+These projects focus on scalar quantities and provide implicit unit conversion.

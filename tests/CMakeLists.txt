@@ -17,11 +17,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
         "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Wconversion -Wshadow")
 endif()
 
-add_executable(run_unittests
-    unittests.cc
+add_executable(run
+    run.cc
     test_dim.cc
     test_scalar.cc
     test_vector.cc
     test_point.cc
 )
-add_test(unittests run_unittests)
+
+enable_testing()
+add_test(unittest run)

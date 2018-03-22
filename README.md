@@ -130,11 +130,11 @@ Move to the repository root and type following commands to run tests:
 
 ```console
 git submodule update --init
-mkdir build
-cd build
+mkdir tests/build
+cd tests/build
 cmake ..
 cmake --build .
-tests/run_unittests
+./run
 ```
 
 ## License

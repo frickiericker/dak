@@ -69,9 +69,9 @@ using my_tag = dim::mechanical_dimension<L, M, T>; // Length, Mass, Time
 Use `dim::vector<T, D, N>` template to define vector quantities:
 
 ```c++
+using force = dim::vector<double, dim::mech::force, 3>;
+using acceleration = dim::vector<double, dim::mech::acceleration, 3>;
 using mass = dim::scalar<double, dim::mech::mass>;
-using force = dim::scalar<double, dim::mech::force, 3>;
-using acceleration = dim::scalar<double, dim::mech::acceleration, 3>;
 
 mass m{1.0};
 force f{1.0, 2.0, 3.0};

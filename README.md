@@ -7,8 +7,8 @@ dim - Dimensional Analysis for C++
 
 [cxx-badge]: https://img.shields.io/badge/C%2B%2B-11-orange.svg
 [license-badge]: https://img.shields.io/badge/license-Boost-blue.svg
-[travis-badge]: https://travis-ci.org/frickiericker/dim.svg?branch=master
-[travis-url]: https://travis-ci.org/frickiericker/dim
+[travis-badge]: https://travis-ci.org/snsinfu/dim.svg?branch=master
+[travis-url]: https://travis-ci.org/snsinfu/dim
 
 dim is a single-file, header-only library for compile-time dimensional analysis of scalar and
 vector quantities. It is targeted mainly for physics simulation using reduced units, so it assumes
@@ -41,14 +41,14 @@ int main()
 - [Basic usage](#basic-usage)
 - [Testing](#testing)
 - [License](#license)
-- [Similar projects](#similar-projectsk)
+- [Similar projects](#similar-projects)
 
 ## Installation
 
 dim has no dependency. Just put [dim.hpp][dim.hpp] in your include directory. Change file name
 and/or namespace identifier if necessary.
 
-[dim.hpp]: https://github.com/frickiericker/dim/raw/master/dim/dim.hpp
+[dim.hpp]: https://raw.githubusercontent.com/snsinfu/dim/master/dim/dim.hpp
 
 ## Basic usage
 
